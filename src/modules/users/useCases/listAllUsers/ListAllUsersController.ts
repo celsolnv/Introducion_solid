@@ -10,11 +10,12 @@ class ListAllUsersController {
     if (typeof user_id === "object") {
       return response.sendStatus(400);
     }
-    const users = this.listAllUsersUseCase.execute({ user_id });
-    if (!users) {
-      return response.sendStatus(400);
+    try {
+      const users = this.listAllUsersUseCase.execute({ user_id });
+      return response.send(users);
+    } catch (error) {
+      return response.status(400).send({ error: error?.message });
     }
-    return response.send(users);
   }
 }
 
