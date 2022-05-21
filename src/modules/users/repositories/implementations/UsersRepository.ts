@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { User } from "../../model/User";
 import { IUsersRepository, ICreateUserDTO } from "../IUsersRepository";
 
@@ -19,10 +20,14 @@ class UsersRepository implements IUsersRepository {
   }
 
   create({ name, email }: ICreateUserDTO): User {
-    const user = {
+    const user = new User();
+    Object.assign(user, {
       name,
       email,
-    };
+      admin: false,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
     this.users.push(user);
 
     return user;
@@ -37,7 +42,8 @@ class UsersRepository implements IUsersRepository {
   }
 
   turnAdmin(receivedUser: User): User {
-    // Complete aqui
+    receivedUser.admin = true;
+    receivedUser.updated_at = new Date();
     return receivedUser;
   }
 

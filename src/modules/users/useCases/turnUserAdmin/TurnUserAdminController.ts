@@ -5,7 +5,12 @@ import { TurnUserAdminUseCase } from "./TurnUserAdminUseCase";
 class TurnUserAdminController {
   constructor(private turnUserAdminUseCase: TurnUserAdminUseCase) {}
 
-  handle(request: Request, response: Response): Response {}
+  handle(request: Request, response: Response): Response {
+    const { user_id } = request.params;
+    this.turnUserAdminUseCase.execute({ user_id });
+
+    return response.sendStatus(200);
+  }
 }
 
 export { TurnUserAdminController };
